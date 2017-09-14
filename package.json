@@ -39,8 +39,6 @@
     "gulp-mocha": "^2.1.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-util": "^3.0.5",
-    "json-schema-test-suite": "0.0.10",
-    "tv4": "^1.1.9",
-    "z-schema": "^3.11.0"
+    "json-schema-test-suite": "0.0.10"
   }
 }
