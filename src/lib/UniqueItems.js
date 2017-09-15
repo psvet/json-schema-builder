@@ -1,27 +1,25 @@
-import ArrayKeyword from './ArrayKeyword';
+const ArrayKeyword = require( './ArrayKeyword')
 
-export default class UniqueItems extends ArrayKeyword {
+module.exports = class UniqueItems extends ArrayKeyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (typeof value == 'boolean') {
-      this._value = value;
+      this._value = value
     } else {
-      throw new Error('value must be a boolean value');
+      throw new Error('value must be a boolean value')
     }
   }
 
-  json(context) {
-    context = context || {};
-
-    context.uniqueItems = this.value;
-    return context;
+  json(context = {}) {
+    context.uniqueItems = this.value
+    return context
   }
 }

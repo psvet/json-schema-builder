@@ -1,32 +1,24 @@
-import Keyword from './Keyword';
-import Schema from './Schema';
+const Keyword = require( './Keyword')
 
-export default class Not extends Keyword {
+module.exports = class Not extends Keyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
-    if (typeof value != 'object' || !(value instanceof Schema)) {
-      throw new Error('value must be an object and must be a valid JSON schema');
+    if (typeof value != 'object') {
+      throw new Error('value must be an object')
     }
-
-    this._value = value;
+    this._value = value
   }
 
-  json(context) {
-    context = context || {};
-
-    const value = (this.value instanceof Schema)
-        ? this.value.json({})
-        : this.value;
-
-    context.not = value;
-    return context;
+  json(context = {}) {
+    context.not = this.value.json ? this.value.json({}) : this.value
+    return context
   }
 }

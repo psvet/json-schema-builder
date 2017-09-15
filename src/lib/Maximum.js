@@ -1,27 +1,25 @@
-import NumberKeyword from './NumberKeyword';
+const NumberKeyword = require( './NumberKeyword')
 
-export default class Maximum extends NumberKeyword {
+module.exports = class Maximum extends NumberKeyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   set value(value) {
     if (typeof value != 'number') {
-      throw new Error('value must be a number');
+      throw new Error('value must be a number')
     }
 
-    this._value = value;
+    this._value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
-  json(context) {
-    context = context || {};
-
-    context.maximum = this.value;
-    return context;
+  json(context = {}) {
+    context.maximum = this.value
+    return context
   }
 }

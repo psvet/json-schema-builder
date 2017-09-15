@@ -1,27 +1,25 @@
-import StringKeyword from './StringKeyword';
+const StringKeyword = require( './StringKeyword')
 
-export default class MaxLength extends StringKeyword {
+module.exports = class MaxLength extends StringKeyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (value >= 0 && Number.isInteger(value)) {
-      this._value = value;
+      this._value = value
     } else {
-      throw new Error('value must be an integer and greater than or equal to 0');
+      throw new Error('value must be an integer and greater than or equal to 0')
     }
   }
 
-  json(context) {
-    context = context || {};
-
-    context.maxLength = this.value;
-    return context;
+  json(context = {}) {
+    context.maxLength = this.value
+    return context
   }
 }

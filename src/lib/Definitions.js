@@ -1,33 +1,31 @@
-import Keyword from './Keyword';
-import Schema from './Schema';
+const Keyword = require( './Keyword')
+const Schema = require( './Schema')
 
-export default class Definitions extends Keyword {
+module.exports = class Definitions extends Keyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (typeof value == 'object' && !Array.isArray(value)) {
       for (let prop in value) {
         if (!(prop instanceof Schema)) {
-          throw new Error('value properties must be valid Schema instances');
+          throw new Error('value properties must be valid Schema instances')
         }
       }
-      this._value = value;
+      this._value = value
     } else {
-      throw new Error('value must be an object');
+      throw new Error('value must be an object')
     }
   }
 
-  json(context) {
-    context = context || {};
-
-    context.definitions = value;
-    return context;
+  json(context = {}) {
+    context.definitions = value
+    return context
   }
 }

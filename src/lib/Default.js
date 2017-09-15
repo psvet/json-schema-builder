@@ -1,29 +1,21 @@
-import Keyword from './Keyword';
-import Schema from './Schema';
+const Keyword = require( './Keyword')
 
-export default class Default extends Keyword {
+module.exports = class Default extends Keyword {
 	constructor(value) {
-		super();
-		this.value = value;
+		super()
+		this.value = value
 	}
 
 	get value() {
-		return this._value;
+		return this._value
 	}
 
 	set value(value) {
-		this._value = value;
+		this._value = value
 	}
 
-	json(context) {
-		context = context || {};
-
-		const value = (this.value instanceof Schema)
-			  ? this.value.json({})
-				: this.value;
-
-		context.default = value;
-
-		return context;
+	json(context = {}) {
+		context.default = this.value.json ? this.value.json({}) : this.value
+		return context
 	}
 }

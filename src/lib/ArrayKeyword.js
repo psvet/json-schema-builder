@@ -1,3 +1,3 @@
-import Keyword from './Keyword';
+const Keyword = require( './Keyword')
 
-export default class ArrayKeyword extends Keyword {}
+module.exports = class ArrayKeyword extends Keyword {}

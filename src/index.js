@@ -1,4 +1,4 @@
-import Schema from './Schema';
+const Schema = require( './lib/Schema')
 const schema = exports.schema = function () { return new Schema(...arguments) }
 
 // generic helpers
@@ -18,7 +18,6 @@ exports.null = function () { return schema().null() }
 exports.number = function () { return schema().number() }
 exports.object = function () { return schema().object() }
 exports.string = function () { return schema().string() }
-
 
 // numeric helpers
 exports.exclusiveMaximum = function () { return schema().exclusiveMaximum(...arguments) }
