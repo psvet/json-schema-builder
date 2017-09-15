@@ -434,7 +434,28 @@ module.exports = class Schema extends Builder {
     const pathname = join(...args)
     const json = JSON.stringify(this.json(context), null, 2)
 
-    callback ? writeFile(pathname, json, 'utf8', callback) : writeFileSync(pathname, json, 'utf8')
+    if (!callback) {
+      return new Promise((resolve, reject) => {
+        writeFile(pathname, json, 'utf8', (err, res) => {
+          if (err) return reject(err)
+          resolve(res)
+        })
+      })
+    }
+    writeFile(pathname, json, 'utf8', callback)
+  }
+
+  saveSync() {
+    const context = typeof arguments[0] == 'object' ? arguments[0] : null
+    if (!arguments.length) throw new Error('missing filename argument')
+
+    const begin = context ? 1 : 0
+    const end = arguments.length
+    const args = Array.prototype.slice.call(arguments, begin, end)
+    const pathname = join(...args)
+    const json = JSON.stringify(this.json(context), null, 2)
+
+    writeFileSync(pathname, json, 'utf8')
   }
 }
 
