@@ -1,9 +1,0 @@
-{
-  "properties": {
-    "foo": {}
-  },
-  "required": [
-    "foo"
-  ],
-  "additionalProperties": false
-}
