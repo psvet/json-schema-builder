@@ -421,7 +421,6 @@ module.exports = class Schema extends Builder {
 		return this.getKeywordValue(Default)
 	}
 
-
   save() {
     const context = typeof arguments[0] == 'object' ? arguments[0] : null
     const callback = arguments.length && typeof arguments[arguments.length - 1] == 'function' ? arguments[arguments.length - 1] : null

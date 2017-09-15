@@ -1,7 +1,5 @@
-const assert = require( 'assert')
 const testSuite = require( 'json-schema-test-suite')
 const _ = require( 'lodash')
-const { isEqual, stringify } = require('./helpers')
 const json = require( '../src')
 const { mkdirSync } = require( 'fs')
 const { join } = require( 'path')
@@ -39,7 +37,7 @@ function buildTest(name, description, builderFn) {
       const expected = getSchema(name, description)
       const actual = builderFn().json()
 
-      if (!isEqual(actual, expected) || verbose) {
+      if (!_.isEqual(actual, expected) || verbose) {
         print('==============================')
         print('expected =>')
         print(expected)
@@ -387,7 +385,7 @@ describe('Integration', () => {
   function assertMatch(filename) {
     const expected = require(join(expectedDir, filename))
     const actual = require(join(actualDir, filename))
-    if (verbose && !isEqual(actual, expected) || verbose) {
+    if (verbose && !_.isEqual(actual, expected) || verbose) {
       print('\nFilename: %s', filename)
       print('Expected:')
       print(expected)
