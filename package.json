@@ -1,11 +1,10 @@
 {
-  "name": "json-schema-builder",
-  "version": "0.0.5",
-  "description": "Library for generating JSON Schema.",
-  "main": "./dist/lib",
+  "name": "json-schema-buildr",
+  "version": "0.0.1",
+  "description": "Library for generating JSON Schema. Fork of unmaintained json-schema-builder.",
+  "main": "./src",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -17,18 +16,18 @@
   ],
   "contributors": [
     "Tony Pujals (http://twitter.com/subfuzion)",
-    "Peter Svetlichny (http://twitter.com/p_svetlichny)"
+    "Peter Svetlichny (http://github.com/psvet)"
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/atomiqio/json-schema-builder/issues"
+    "url": "https://github.com/psvet/json-schema-buildr/issues"
   },
-  "homepage": "https://github.com/atomiqio/json-schema-builder#readme",
+  "homepage": "https://github.com/psvet/json-schema-buildr#readme",
   "dependencies": {
-    "lodash": "^4.10.0"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "del": "^1.2.0",
+    "del": "^3.0.0",
     "jest": "^21.1.0",
     "json-schema-test-suite": "0.0.10"
   }
