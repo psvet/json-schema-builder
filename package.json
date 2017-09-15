@@ -4,11 +4,12 @@
   "description": "Library for generating JSON Schema.",
   "main": "./dist/lib",
   "scripts": {
-    "test": "mocha"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atomiqio/json-schema-builder.git"
+    "url": "git+https://github.com/psvet/json-schema-builder.git"
   },
   "keywords": [
     "JSON",
@@ -24,10 +25,11 @@
   },
   "homepage": "https://github.com/atomiqio/json-schema-builder#readme",
   "dependencies": {
-    "lodash": "^3.10.0"
+    "lodash": "^4.10.0"
   },
   "devDependencies": {
     "del": "^1.2.0",
+    "jest": "^21.1.0",
     "json-schema-test-suite": "0.0.10"
   }
 }
