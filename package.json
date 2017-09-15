@@ -4,9 +4,7 @@
   "description": "Library for generating JSON Schema.",
   "main": "./dist/lib",
   "scripts": {
-    "test": "gulp test",
-    "test-node-0.12": "mocha dist/test -- --harmony",
-    "clean": "gulp clean"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
