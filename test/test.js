@@ -404,8 +404,16 @@ describe('Integration', () => {
     mkdirSync(actualDir)
   })
 
-  describe ('save tests', () => {
-    test('should write sample schema async', done => {
+  describe('save tests', () => {
+    test('should write sample schema with a promise', () => {
+      const schema = json.string()
+      const sample = 'sample1.json'
+      return schema.save(actualDir, sample)
+        .then(() => {
+          assertMatch(sample)
+        })
+    })
+    test('should write sample schema with a callback', done => {
       const schema = json.string()
       const sample = 'sample1.json'
       schema.save(actualDir, sample, (err) => {
@@ -417,61 +425,61 @@ describe('Integration', () => {
     test('should write sample schema sync', () => {
       const schema = json.string()
       const sample = 'sample1.json'
-      schema.save(actualDir, sample)
+      schema.saveSync(actualDir, sample)
       assertMatch(sample)
     })
   })
-  describe ('Simple tests', () => {
+  describe('Simple tests', () => {
     test('should match empty schema', () => {
       const schema = json.schema()
-      schema.save(actualDir, 'empty.json')
+      schema.saveSync(actualDir, 'empty.json')
       assertMatch('empty.json')
     })
     test('should match schema with property', () => {
       const schema = json.property('foo')
-      schema.save(actualDir, 'empty.json')
+      schema.saveSync(actualDir, 'empty.json')
       assertMatch('empty.json')
     })
     test('should also match schema with property', () => {
       const schema = json.schema().properties({ foo: {} })
-      schema.save(actualDir, 'single-property.json')
+      schema.saveSync(actualDir, 'single-property.json')
       assertMatch('single-property.json')
     })
     test('should match object schema with property', () => {
       const schema = json.object().property('foo')
-      schema.save(actualDir, 'explicit-object-single-property.json')
+      schema.saveSync(actualDir, 'explicit-object-single-property.json')
       assertMatch('explicit-object-single-property.json')
     })
     test('should match schema with additional properties allowed', () => {
       const schema = json.object().property('foo').additionalProperties(true)
-      schema.save(actualDir, 'additionalProperties-true.json')
+      schema.saveSync(actualDir, 'additionalProperties-true.json')
       assertMatch('additionalProperties-true.json')
     })
     test('should match schema with additional properties not allowed', () => {
       const schema = json.object().property('foo').additionalProperties(false)
-      schema.save(actualDir, 'additionalProperties-false.json')
+      schema.saveSync(actualDir, 'additionalProperties-false.json')
       assertMatch('additionalProperties-false.json')
     })
     test('should match schema with single required property', () => {
       const schema = json.property('foo', {}, true)
-      schema.save(actualDir, 'single-required-property.json')
+      schema.saveSync(actualDir, 'single-required-property.json')
       assertMatch('single-required-property.json')
     })
     test('should also match schema with single required property', () => {
       const schema = json.property('foo').required(true)
-      schema.save(actualDir, 'single-required-property.json')
+      schema.saveSync(actualDir, 'single-required-property.json')
       assertMatch('single-required-property.json')
     })
     test('should match schema with single required property and no others allowed', () => {
       const schema = json.property('foo').required('foo').additionalProperties(false)
-      schema.save(actualDir, 'single-required-property-additionalProperties-false.json')
+      schema.saveSync(actualDir, 'single-required-property-additionalProperties-false.json')
       assertMatch('single-required-property-additionalProperties-false.json')
     })
     test('should match schema with multiple properties', () => {
       const schema = json
           .property('foo', json.string(), true)
           .property('bar', json.integer())
-      schema.save(actualDir, 'multiple-properties.json')
+      schema.saveSync(actualDir, 'multiple-properties.json')
       assertMatch('multiple-properties.json')
     })
   })
