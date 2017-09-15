@@ -1,27 +1,26 @@
-import Keyword from './Keyword';
+const Keyword = require( './Keyword')
 
-export default class RefKeyword extends Keyword {
+module.exports = class RefKeyword extends Keyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (typeof value != 'string') {
       // TODO better validation
-      throw new Error('value must be a valid uri string');
+      throw new Error('value must be a valid uri string')
     }
 
-    this._value = value;
+    this._value = value
   }
 
-  json(context) {
-    context = context || {};
-    context.$ref = this.value;
-    return context;
+  json(context = {}) {
+    context.$ref = this.value
+    return context
   }
 }

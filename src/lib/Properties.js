@@ -1,60 +1,47 @@
-import Builder from './Builder';
-import Schema from './Schema';
-import ObjectKeyword from './ObjectKeyword';
+const ObjectKeyword = require( './ObjectKeyword')
 
-
-export default class Properties extends ObjectKeyword {
+module.exports = class Properties extends ObjectKeyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
-    if (typeof value == 'object') {
-      this._value = value;
-    } else {
-      throw new Error('value must be an object');
-    }
+    if (typeof value !== 'object') throw new Error('value must be an object')
+    this._value = value
   }
 
-  add(name, value) {
+  add(name, value = {}) {
     if (typeof name == 'object') {
       Object.keys(name).forEach(key => {
-        this.add(key, name[key]);
-      });
-      return;
+        this.add(key, name[key])
+      })
+      return
     }
-
-
+    
     if (this.value) {
-      this.value[name] = value || {};
+      this.value[name] = value
     } else {
-      const prop = {};
-      prop[name] = value || {};
-      this.value = prop;
+      const prop = {}
+      prop[name] = value
+      this.value = prop
     }
   }
 
-  json(context) {
-    context = context || {};
-
+  json(context = {}) {
+    // console.log('here', context)
     if (this.value) {
-      const props = {};
-      Object.keys(this.value).forEach(key => {
-        let ctx = {};
-        const value = this.value[key];
-        props[key] = (value instanceof Builder)
-            ? this.value[key].json(ctx)
-            : this.value[key];
-      });
-
-      context.properties = props;
+      context.properties = Object.keys(this.value).reduce((acc, key) => {
+        const value = this.value[key]
+        acc[key] = value.json ? value.json({}) : value
+        return acc
+      }, {})
     }
 
-    return context;
+    return context
   }
 }

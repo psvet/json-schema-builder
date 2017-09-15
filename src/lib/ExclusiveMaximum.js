@@ -1,31 +1,29 @@
-import NumberKeyword from './NumberKeyword';
+const NumberKeyword = require( './NumberKeyword')
 
-export default class ExclusiveMaximum extends NumberKeyword {
+module.exports = class ExclusiveMaximum extends NumberKeyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (typeof value == 'boolean') {
-      this._value = value;
+      this._value = value
     } else {
-      throw new Error('value must be a boolean value');
+      throw new Error('value must be a boolean value')
     }
   }
 
-  json(context) {
-    context = context || {};
-
+  json(context = {}) {
     if (!context.hasOwnProperty('maximum')) {
-      throw new Error("maximum must be present with exclusiveMaximum");
+      throw new Error("maximum must be present with exclusiveMaximum")
     }
 
-    context.exclusiveMaximum = this.value;
-    return context;
+    context.exclusiveMaximum = this.value
+    return context
   }
 }

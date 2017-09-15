@@ -1,65 +1,56 @@
-import Builder from './Builder';
-import Schema from './Schema';
-import ObjectKeyword from './ObjectKeyword';
+const ObjectKeyword = require( './ObjectKeyword')
 
-export default class PatternProperties extends ObjectKeyword {
+module.exports = class PatternProperties extends ObjectKeyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (typeof value == 'object') {
-      this._value = value;
+      this._value = value
     } else {
-      throw new Error('value must be an object');
+      throw new Error('value must be an object')
     }
   }
 
   add(name, value) {
     if (typeof name == 'object') {
       Object.keys(name).forEach(key => {
-        this.add(key, name[key]);
-      });
-      return;
+        this.add(key, name[key])
+      })
+      return
     }
 
     if (typeof name != 'string') {
-      throw new Error('name must be a string and should be a valid regular expression');
+      throw new Error('name must be a string and should be a valid regular expression')
     }
 
-    if (typeof value != 'object' && value instanceof Schema) {
-      throw new Error('value must be a valid Schema instance');
+    if (typeof value != 'object') {
+      throw new Error('value must be an object')
     }
 
     if (this.value) {
-      this.value[name] = value;
+      this.value[name] = value
     } else {
-      const prop = {};
-      prop[name] = value;
-      this.value = prop;
+      const prop = {}
+      prop[name] = value
+      this.value = prop
     }
   }
 
-  json(context) {
-    context = context || {};
-
+  json(context = {}) {
     if (this.value) {
-      const props = {};
-      Object.keys(this.value).forEach(key => {
-        const value = this.value[key];
-        props[key] = (value instanceof Builder)
-            ? this.value[key].json()
-            : this.value[key];
-      });
-
-      context.patternProperties = props;
+      context.patternProperties = Object.keys(this.value).reduce((acc, key) => {
+        const value = this.value[key]
+        acc[key] = value.json ? value.json() : value
+        return acc
+      }, {})
     }
-
-    return context;
+    return context
   }
 }

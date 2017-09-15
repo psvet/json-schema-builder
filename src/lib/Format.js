@@ -1,5 +1,5 @@
-import StringKeyword from './StringKeyword';
-import { includes } from 'lodash';
+const StringKeyword = require( './StringKeyword')
+const { includes } = require( 'lodash')
 
 let validFormats = [
 	'date-time',
@@ -8,34 +8,32 @@ let validFormats = [
 	'ipv4',
 	'ipv6',
 	'uri'
-];
+]
 
-export default class Format extends StringKeyword {
+module.exports = class Format extends StringKeyword {
 	constructor(value) {
-		super();
-		this.value = value;
+		super()
+		this.value = value
 	}
 
 	get value() {
-		return this._value;
+		return this._value
 	}
 
 	set value(value) {
 		if (typeof value !== 'string') {
-			throw new Error('value must be a string');
+			throw new Error('value must be a string')
 		}
 
 		if (!includes(validFormats, value)) {
-			throw new Error('value must be a valid format');
+			throw new Error('value must be a valid format')
 		}
 
-		this._value = value;
+		this._value = value
 	}
 
-	json(context) {
-		context = context || {};
-
-		context.format = this.value;
-		return context;
+	json(context = {}) {
+		context.format = this.value
+		return context
 	}
 }

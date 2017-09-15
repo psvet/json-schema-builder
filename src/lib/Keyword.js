@@ -1,5 +1,5 @@
-import Builder from './Builder';
+const Builder = require( './Builder')
 
-export default class Keyword extends Builder {}
+module.exports = class Keyword extends Builder {}
 
 

@@ -1,63 +1,42 @@
-import ObjectKeyword from './ObjectKeyword';
-import Builder from './Builder';
-import Schema from './Schema';
-import { uniq } from 'lodash';
+const ObjectKeyword = require( './ObjectKeyword')
+const { uniq } = require( 'lodash')
 
-export default class Dependencies extends ObjectKeyword {
+module.exports = class Dependencies extends ObjectKeyword {
   constructor(value) {
-    super();
-    this.value = value;
+    super()
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
-    if (typeof value == 'object' && !Array.isArray(value)) {
-      for (let prop in value) {
-        if ((typeof prop == 'object' && !(prop instanceof Schema)) && !Array.isArray(prop)) {
-          throw new Error('value property must be array or Schema instance');
-        }
-        else if (Array.isArray(prop)) {
-          if (!prop.length) {
-            throw new Error('array must have at least one item');
-          }
-
-          if (uniq(prop).length != prop.length) {
-            throw new Error('array items must be unique');
-          }
-
-          prop.forEach(elem => {
-            if (typeof elem !== 'string') {
-              throw new Error('array items must strings');
-            }
-          });
-        }
+    if (typeof value !== 'object') throw new Error('value must be an object')
+    Object.keys(value).forEach(key => {
+      if (typeof value[key] !== 'object') {
+        throw new Error('value property must be array or object')
       }
-    } else {
-      throw new Error('value must be an object');
-    }
-
-    this._value = value;
+      else if (Array.isArray(value[key])) {
+        if (!value[key].length) throw new Error('array must have at least one item')
+        if (uniq(value[key]).length != value[key].length) throw new Error('array items must be unique')
+        value[key].forEach(elem => {
+          if (typeof elem !== 'string') throw new Error('array items must strings')
+        })
+      }
+    })
+    this._value = value
   }
 
-  json(context) {
-    context = context || {};
-
+  json(context = {}) {
     if (this.value) {
-      const props = {};
-      Object.keys(this.value).forEach(key => {
-        let ctx = {};
-        const value = this.value[key];
-        props[key] = (value instanceof Builder)
-            ? this.value[key].json(ctx)
-            : this.value[key];
-      });
-
-      context.dependencies = props;
+      context.dependencies = Object.keys(this.value).reduce((acc, key) => {
+        const value = this.value[key]
+        acc[key] = value.json ? value.json({}) : value
+        return acc
+      }, {})
     }
 
-    return context;
+    return context
   }
 }

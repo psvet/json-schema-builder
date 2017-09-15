@@ -1,35 +1,34 @@
-import Keyword from './Keyword';
+const Keyword = require( './Keyword')
 
-export default class Enum extends Keyword {
+module.exports = class Enum extends Keyword {
   constructor(value) {
-    super();
+    super()
 
     if (!Array.isArray(value)) {
-      value = Array.prototype.slice.call(arguments);
+      value = Array.prototype.slice.call(arguments)
     }
-    this.value = value;
+    this.value = value
   }
 
   get value() {
-    return this._value;
+    return this._value
   }
 
   set value(value) {
     if (!Array.isArray(value)) {
-      value = Array.prototype.slice.call(arguments);
+      value = Array.prototype.slice.call(arguments)
     }
 
     if (value.length) {
-      this._value = value;
+      this._value = value
     } else {
-      throw new Error('value must be an array with at least one element');
+      throw new Error('value must be an array with at least one element')
     }
   }
 
-  json(context) {
-    context = context || {};
-    context.enum = this.value;
-    return context;
+  json(context = {}) {
+    context.enum = this.value
+    return context
   }
 }
 
