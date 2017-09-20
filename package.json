@@ -4,7 +4,9 @@
   "description": "Library for generating JSON Schema. Fork of unmaintained json-schema-builder.",
   "main": "./src",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "cover": "jest --coverage",
+    "clean": "rm -rf node_modules/ test/actual/ coverage/"
   },
   "repository": {
     "type": "git",
